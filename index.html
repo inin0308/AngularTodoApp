@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <link data-require="bootstrap@3.3.6" data-semver="3.3.6" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <script data-require="angularjs@1.5.7" data-semver="1.5.7" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="script.js"></script>
+    <script src="directives.js"></script>
+  </head>
+
+  <body ng-app="todoApp" ng-controller="TodoCtrl">
+    <!--<h1>Todo List</h1>-->
+    <todo-title></todo-title>
+    <!--<h3>{{todo.title}}</h3>
+    <p>{{todo.completed}}</p>
+    <date>{{todo.createdAt}}</date>-->
+    <form name="todoForm" ng-submit="add(newTodoTitle)">
+      <div class="input-group">
+      <input type="text" ng-model="newTodoTitle" class="form-control" placeholder="make a new todo..." autofocus minlength="3"><!-- minlength : unless(minimum) 3 letter -->
+          <span class="input-group-btn">
+            <button class="btn btn-success" type="submit">Add</button>
+          </span>
+        </div><!-- /input-group -->
+        
+        <div ng-show="todoForm.$dirty && todoForm.$invalid">
+          <div class="alert alert-warning" role="alert">please write more than 3 letters</div>
+        </div>
+        
+    </form>
+    
+    <!--<pre>
+      {{todoForm | json}}
+    </pre>-->
+    
+    <ul>
+      <li ng-repeat="todo in todos | filter:statusFilter" class="list-unstyled">
+        <div class="input-group">
+          <span class="input-group-addon">
+        <input type="checkbox" ng-model="todo.completed" aria-label="...">
+        <!--ng-model : 새로 입력한 data를 javascript에 저장-->
+      </span>
+      <input type="text" ng-model="todo.title" class="form-control" placeholder="Search for...">
+          <span class="input-group-btn">
+            <button class="btn btn-danger" type="button" ng-click="remove(todo)">Delete!</button>
+          </span>
+        </div><!-- /input-group -->
+        <date>{{todo.createdAt |  date : format : short }}</date>
+      </li>
+    </ul>
+       
+    <button class="btn btn-primary" ng-click="statusFilter={completed:true}">Completed</button>
+    <button class="btn btn-primary" ng-click="statusFilter={completed:false}">Active</button>
+    <button class="btn btn-primary" ng-click="statusFilter={}">All</button>
+  </body>
+
+</html>
